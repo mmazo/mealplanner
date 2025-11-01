@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: mealplanner
+  ai:
+    openai:
+      api-key: your-openai-api-key
+      chat:
+        options:
+          model: gpt-4o-mini
+server:
+  port: 8080
