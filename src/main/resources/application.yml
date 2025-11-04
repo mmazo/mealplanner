@@ -1,6 +1,17 @@
 spring:
   application:
     name: mealplanner
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:h2:file:~/mealplanner;MODE=MySQL;AUTO_SERVER=TRUE;NON_KEYWORDS=VALUE, USER, KEY, TEMPLATE, MESSAGE, STATUS, EXCEPTION, TIMESTAMP, TO;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+  h2:
+    console:
+      enabled: true
   ai:
     openai:
       api-key: your-openai-api-key

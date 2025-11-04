@@ -1,4 +1,4 @@
-package com.mmazo.mealplanner.model;
+package com.mmazo.mealplanner.recipe.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe {
+public class RecipeDTO {
     String name;
     List<String> ingredients;
     int time;

@@ -1,42 +1,46 @@
-package com.mmazo.mealplanner.controller;
+package com.mmazo.mealplanner.planner.controller;
 
-import com.mmazo.mealplanner.model.Recipe;
+import com.mmazo.mealplanner.recipe.dto.RecipeDTO;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
-public class MealPlannerController {
+@RequestMapping("/api/planner")
+public class PlannerController {
 
     private final OpenAiChatModel chatModel;
 
     @Autowired
-    public MealPlannerController(OpenAiChatModel chatModel) {
+    public PlannerController(OpenAiChatModel chatModel) {
         this.chatModel = chatModel;
     }
 
     @PostMapping("/generate-plan")
-    public Map<String, Object> generatePlan(@RequestBody List<Recipe> recipes) {
+    public ResponseEntity<Map<String, Object>> generatePlan(@RequestBody List<RecipeDTO> recipes) {
         Prompt prompt = getPrompt(recipes);
 
         var response = chatModel.call(prompt);
         String content = response.getResult().getOutput().getContent();
 
-        // Try to parse it as JSON if it's valid, else return raw string
+        Map<String, Object> result;
         try {
-            return Map.of("result", new com.fasterxml.jackson.databind.ObjectMapper().readValue(content, Map.class));
+            result = Map.of("result", new com.fasterxml.jackson.databind.ObjectMapper().readValue(content, Map.class));
         } catch (Exception e) {
-            return Map.of("raw", content);
+            result = Map.of("raw", content);
         }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    private static Prompt getPrompt(List<Recipe> recipes) {
+    private static Prompt getPrompt(List<RecipeDTO> recipes) {
         String template = """
                 You are a meal planner assistant.
                 Given this list of recipes in JSON format:
