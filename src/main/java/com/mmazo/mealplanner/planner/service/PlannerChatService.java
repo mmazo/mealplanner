@@ -6,7 +6,6 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class PlannerChatService {
         this.chatModel = chatModel;
     }
 
-    public Map<String, Object> generatePlan(@RequestBody List<RecipeDTO> recipes) {
+    public Map<String, Object> generatePlan(List<RecipeDTO> recipes) {
         Prompt prompt = this.getPrompt(recipes);
         String content = chatModel.call(prompt).getResult().getOutput().getContent();
 
