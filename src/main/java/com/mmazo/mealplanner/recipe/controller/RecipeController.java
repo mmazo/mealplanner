@@ -1,5 +1,6 @@
 package com.mmazo.mealplanner.recipe.controller;
 
+import com.mmazo.mealplanner.recipe.dto.RecipeDTO;
 import com.mmazo.mealplanner.recipe.model.Recipe;
 import com.mmazo.mealplanner.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,23 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Recipe> getById(@PathVariable Long id) {
+    public ResponseEntity<RecipeDTO> getById(@PathVariable Long id) {
         return new ResponseEntity<>(recipeService.getRecipeById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Recipe>> getAll() {
+    public ResponseEntity<List<RecipeDTO>> getAll() {
         return new ResponseEntity<>(recipeService.getAllRecipes(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Recipe> saveRecipe(@RequestBody Recipe recipe) {
-        return new ResponseEntity<>(recipeService.saveRecipe(recipe), HttpStatus.OK);
+    public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO recipe) {
+        return new ResponseEntity<>(this.recipeService.createRecipe(recipe), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipe, @PathVariable Long id) {
+        return new ResponseEntity<>(recipeService.updateRecipe(recipe, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
