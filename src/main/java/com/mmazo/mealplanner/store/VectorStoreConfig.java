@@ -11,7 +11,7 @@ public class VectorStoreConfig {
 
     @Bean
     public VectorStore vectorStore(EmbeddingModel embeddingModel) {
-        // use OpenAiVectorStore in the future
+        // OpenAI Vector Store
         return SimpleVectorStore.builder(embeddingModel).build();
     }
 }
