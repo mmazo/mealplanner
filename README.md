@@ -11,5 +11,5 @@ A small demo Spring Boot + Spring AI + Swagger UI app that generates a weekly me
 ## How it works
 
 - Recipes are stored in the file-based H2 database.
-- SimpleVectorStore is used to store the recipe embeddings and perform search.
-- OpenAI Chat Client is used to generate weekly meals plan and shopping list based on recipes stored in the vector store.
+- SimpleVectorStore is used to store the recipe embeddings and perform search for relevant recipes.
+- OpenAI Chat Client is used to generate weekly meals plan and shopping list based on relevant recipes.
