@@ -2,6 +2,12 @@ package com.mmazo.mealplanner.recipe.repository;
 
 import com.mmazo.mealplanner.recipe.model.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RecipeRepository extends JpaRepository<Recipe, Long> {}
+import java.util.List;
+
+@Repository
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+    List<Recipe> findRecipesByIdIn(List<Long> ids);
+}
 

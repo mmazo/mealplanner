@@ -1,7 +1,6 @@
 package com.mmazo.mealplanner.recipe.controller;
 
 import com.mmazo.mealplanner.recipe.dto.RecipeDTO;
-import com.mmazo.mealplanner.recipe.model.Recipe;
 import com.mmazo.mealplanner.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

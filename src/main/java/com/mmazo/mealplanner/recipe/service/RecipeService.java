@@ -24,6 +24,10 @@ public class RecipeService {
         return recipeRepository.findAll().stream().map(this.recipeMapper::toRecipeDTO).toList();
     }
 
+    public List<RecipeDTO> getAllRecipesByIDs(List<Long> ids) {
+        return recipeRepository.findRecipesByIdIn(ids).stream().map(this.recipeMapper::toRecipeDTO).toList();
+    }
+
     public RecipeDTO getRecipeById(Long id) {
         Recipe recipe = recipeRepository.findById(id).orElse(null);
         if (recipe != null) {

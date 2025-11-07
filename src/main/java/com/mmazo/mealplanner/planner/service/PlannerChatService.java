@@ -20,18 +20,9 @@ public class PlannerChatService {
         this.chatModel = chatModel;
     }
 
-    public Map<String, Object> generatePlan(List<RecipeDTO> recipes) {
+    public String generatePlan(List<RecipeDTO> recipes) {
         Prompt prompt = this.getPrompt(recipes);
-        String content = chatModel.call(prompt).getResult().getOutput().getContent();
-
-        Map<String, Object> result;
-        try {
-            result = Map.of("result", new com.fasterxml.jackson.databind.ObjectMapper().readValue(content, Map.class));
-        } catch (Exception e) {
-            result = Map.of("raw", content);
-        }
-
-        return result;
+        return chatModel.call(prompt).getResult().getOutput().getText();
     }
 
     private Prompt getPrompt(List<RecipeDTO> recipes) {
