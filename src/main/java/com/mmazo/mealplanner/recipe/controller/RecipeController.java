@@ -2,6 +2,7 @@ package com.mmazo.mealplanner.recipe.controller;
 
 import com.mmazo.mealplanner.recipe.dto.RecipeDTO;
 import com.mmazo.mealplanner.recipe.service.RecipeService;
+import com.mmazo.mealplanner.store.RecipeStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,12 @@ import java.util.List;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final RecipeStoreService recipeStoreService;
 
     @Autowired
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, RecipeStoreService recipeStoreService) {
         this.recipeService = recipeService;
+        this.recipeStoreService = recipeStoreService;
     }
 
     @GetMapping("/{id}")
@@ -32,17 +35,22 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO recipe) {
-        return new ResponseEntity<>(this.recipeService.createRecipe(recipe), HttpStatus.OK);
+        RecipeDTO createdRecipe = this.recipeService.createRecipe(recipe);
+        this.recipeStoreService.saveRecipeInStore(createdRecipe);
+        return new ResponseEntity<>(createdRecipe, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipe, @PathVariable Long id) {
-        return new ResponseEntity<>(recipeService.updateRecipe(recipe, id), HttpStatus.OK);
+        RecipeDTO updatedRecipe = this.recipeService.updateRecipe(recipe, id);
+        this.recipeStoreService.saveRecipeInStore(updatedRecipe);
+        return new ResponseEntity<>(updatedRecipe, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        recipeService.deleteRecipeById(id);
+        this.recipeService.deleteRecipeById(id);
+        this.recipeStoreService.removeRecipeFromStore(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
