@@ -18,9 +18,15 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private int time;
+
     @ElementCollection
     private List<String> ingredients;
+
+    @ElementCollection
+    private List<String> tags;
 }
 

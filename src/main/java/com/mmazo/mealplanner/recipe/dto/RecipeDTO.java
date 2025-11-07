@@ -15,5 +15,6 @@ public class RecipeDTO {
     long recipeId;
     String name;
     List<String> ingredients;
+    List<String> tags;
     int time;
 }

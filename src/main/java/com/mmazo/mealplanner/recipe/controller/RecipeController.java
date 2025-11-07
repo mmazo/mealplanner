@@ -33,6 +33,12 @@ public class RecipeController {
         return new ResponseEntity<>(recipeService.getAllRecipes(), HttpStatus.OK);
     }
 
+    @PostMapping("/search")
+    public ResponseEntity<List<RecipeDTO>> search(@RequestBody String searchQuery) {
+        List<Long> relevantRecipeIDs = this.recipeStoreService.searchRecipesInStore(searchQuery);
+        return new ResponseEntity<>(this.recipeService.getAllRecipesByIDs(relevantRecipeIDs), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO recipe) {
         RecipeDTO createdRecipe = this.recipeService.createRecipe(recipe);

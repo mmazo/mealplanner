@@ -28,17 +28,17 @@ public class RecipeStoreService {
      * @param recipe recipe
      */
     public void saveRecipeInStore(RecipeDTO recipe) {
-        String text = recipe.getName() + "\n" +
-                      recipe.getIngredients() + "\n";
-
-        String recipeId = String.valueOf(recipe.getRecipeId());
+        String text = """
+                      %s.
+                      Ingredients: %s
+                      Tags: %s
+                      """.formatted(recipe.getName(), recipe.getIngredients(), recipe.getTags());
 
         Map<String, Object> metadata = new HashMap<>();
-        metadata.put(RECIPE_ID_KEY, recipeId);
-        metadata.put("name", recipe.getName());
+        metadata.put(RECIPE_ID_KEY, recipe.getRecipeId());
 
         Document doc = new Document(
-                recipeId,
+                String.valueOf(recipe.getRecipeId()),
                 text,
                 metadata
         );
