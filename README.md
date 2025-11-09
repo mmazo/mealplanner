@@ -2,7 +2,7 @@
 
 A small demo Spring Boot + Spring AI + Swagger UI app that generates a weekly meals plan and shopping list using OpenAI API and RAG technique.
 
-## RAG (Retrieval-Augmented Generation) technique applied
+## RAG (Retrieval Augmented Generation) technique applied
 
 ### Retrieval step
 
